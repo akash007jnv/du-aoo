@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.Laato{
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "NYT Franklin";
+  src:
+       url("/ggg.ttf") format("truetype");
+  font-weight:bolder;
+  font-style: normal;
+}
+.loho{
+  font-family: "NYT Franklin", sans-serif;
+  font-weight: "bold";
+}
+.Hd{
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+
+}
