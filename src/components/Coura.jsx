@@ -41,15 +41,14 @@ showThumbs={false}
      >
       {News.map((f)=>{
         const displayText = f.title.substring(0, 197) + "...";
+        const ElId = f._id
         return(<>
 <Link onClick={()=>{setFeaturedPost(f._id)}} href='/SelectedFeatured'    
-as={`/SelectedFeatured/${ElId}`}
-
->
+as={`/SelectedFeatured/${ElId}`}>
                 <div className=''>
                     <p className="text-black text-xl Laato  px-5 ">{displayText}</p>
-                    <p className=" text-[15px] font-mono text-gray-500 px-10 ">Updated on {moment(f.publishedAt).format('dddd, MMMM Do YYYY')}</p>
-                    <img className='w-20  md:w-[400px] md:h-[300px]  rounded-lg px-10' src={f.imageUrl} />
+                    <p className=" text-[10px] lg:text-[14px]  w-full     font-semibold  text-gray-400   ">Updated on {moment(f.publishedAt).format('dddd, MMMM Do YYYY')}</p>
+                    <img className='w-20  md:w-[400px] md:h-[300px] bg-cover h-[180px]  rounded-lg px-10' src={f.imageUrl} />
 
                 </div>
                 </Link>
