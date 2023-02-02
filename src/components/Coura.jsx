@@ -42,7 +42,10 @@ showThumbs={false}
       {News.map((f)=>{
         const displayText = f.title.substring(0, 197) + "...";
         return(<>
-<Link onClick={()=>{setFeaturedPost(f._id)}} href='/SelectedFeatured'>
+<Link onClick={()=>{setFeaturedPost(f._id)}} href='/SelectedFeatured'    
+as={`/SelectedFeatured/${ElId}`}
+
+>
                 <div className=''>
                     <p className="text-black text-xl Laato  px-5 ">{displayText}</p>
                     <p className=" text-[15px] font-mono text-gray-500 px-10 ">Updated on {moment(f.publishedAt).format('dddd, MMMM Do YYYY')}</p>
