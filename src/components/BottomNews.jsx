@@ -10,7 +10,7 @@ const BottomNews = () => {
 
     useEffect(() => {
         client.fetch(`
-        *[_type == 'news']{
+        *[_type == 'news']  | order(publishedAt desc) {
           _id,
             excerpt,
             categories,

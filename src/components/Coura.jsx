@@ -1,65 +1,88 @@
-import React,{useContext, useEffect,useState} from 'react'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
-import client from '../Sanity/sanity';
-import moment from 'moment';
-import Link from 'next/link';
-import { GlobalData } from '../pages/_app';
+import React, { useContext, useEffect, useState } from "react";
+import Slider from "react-slick";
+import { useRouter } from 'next/router';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import client from "../Sanity/sanity";
+import moment from "moment";
+import Link from "next/link";
+import { GlobalData } from "../pages/_app";
+import slug from "@/pages/[slug]";
+
 function Coura() {
+  const [News, setNews] = useState([]);
+  const { FeaturedPost, setFeaturedPost } = useContext(GlobalData);
 
 
-  const [News, setNews] = useState([])
- const {FeaturedPost, setFeaturedPost} = useContext(GlobalData)
- 
-  useEffect(() => {
-   client.fetch(`
-   *[_type == 'featuredNews']{
-    _id,
-      body,
-      categories,
-      "imageUrl": image.asset->url,
-      importantLinks,
-      publishedAt,
-      source,
-      title
-    
-    }
-   `).then((data)=>{
-    console.log(data)
-    setNews(data)
-   })
-  }, [])
-  
-  return (
-
-<Carousel
- className='bg-white shadow-lg rounded-md lg:w-[700px] py-10 '
-     infiniteLoop= {true}
-     
-    autoPlay={true}
-showThumbs={false}     
-     >
-      {News.map((f)=>{
-        const displayText = f.title.substring(0, 197) + "...";
-        const ElId = f._id
-        return(<>
-<Link onClick={()=>{setFeaturedPost(f._id)}} href='/SelectedFeatured'    
-as={`/SelectedFeatured/${ElId}`}>
-                <div className=''>
-                    <p className="text-black text-xl Laato  px-5 ">{displayText}</p>
-                    <p className=" text-[10px] lg:text-[14px]  w-full     font-semibold  text-gray-400   ">Updated on {moment(f.publishedAt).format('dddd, MMMM Do YYYY')}</p>
-                    <img className='w-20  md:w-[400px] md:h-[300px] bg-cover h-[180px]  rounded-lg px-10' src={f.imageUrl} />
-
-                </div>
-                </Link>
-        </>
-              
-              )
-            })}
-            </Carousel>
-     
+  const handleClick = (slug) => {
+    router.push(`/${slug}`);
    
-  )
+  };
+
+  useEffect(() => {
+    client
+      .fetch(`
+        *[_type == 'featuredNews'] | order(publishedAt desc) {
+          _id,
+          body,
+          categories,
+          "imageUrl": image.asset->url,
+          importantLinks,
+          publishedAt,
+          source,
+          title
+        }
+      `)
+      .then((data) => {
+        console.log(data);
+        setNews(data);
+      });
+  }, []);
+  
+
+  const settings = {
+    infinite: true,
+    speed: 600,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+  };
+
+  return (
+    <div className="relative w-full">
+      <div className="absolute w-full">
+        <div className="absolute w-full bg-gradient-to-t from-black to-transparent bg-gradient"></div>
+        <Slider {...settings}>
+          {News.map((g) => {
+            const { imageUrl, title,publishedAt,Slug } = g;
+            // const hh = Slug.slug
+            return (
+              <Link
+             href={`${Slug}`} 
+              >
+          
+              <div key={g._id}>
+                <div
+                  className="w-full h-[500px] bg-cover relative z-40"
+                  style={{ backgroundImage: `url(${imageUrl})` }}
+                >
+                  <div className="absolute z-20 inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                  <h1 className="absolute bottom-10 left-0 ml-3 Laato z-50 text-white text-xl ">
+                    {title}
+                  </h1>
+                  <p className="absolute bottom-6 left-0 ml-3  z-50 text-white text-[12px] ">
+                    Updated on {moment(publishedAt).format('dddd, MMMM Do YYYY')}
+                  </p>
+                </div>
+              </div>
+              </Link>
+            );
+          })}
+        </Slider>
+      </div>
+    </div>
+  );
 }
 
-export default Coura
+export default Coura;

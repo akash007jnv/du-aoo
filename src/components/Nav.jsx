@@ -27,25 +27,25 @@ function Nav() {
     <>
     <div className="navbar bg-base-100 bg-[#11e29] sticky shadow-md  top-0 z-50">
   <div className="navbar-start">
-  
-    <div className=' hidden md:block Laato font-semibold ' >
-    { `${day},${date}`}
-    </div>
-   
-    
-  
-   
-  
-  </div>
-  <div className="navbar-center flex flex-col">
-   
-    <div className='flex items-center '>
+
+      
+  <div className='flex items-center '>
     <img className='lg:h-[40px] h-[30px]' src='/logo.svg'/>
     <Link href="/">
     <h1 className="ml-1 normal-case loho  text-2xl">The DU Express</h1>
     </Link>
     
     </div>
+  
+   
+  
+  </div>
+  <div className="navbar-center flex flex-col">
+   
+  <div className=' hidden md:block Laato font-semibold ' >
+    { `${day},${date}`}
+    </div>
+   
  
   
     <div className='  md:hidden  font-semibold ' >
